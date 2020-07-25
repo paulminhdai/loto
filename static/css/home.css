@@ -1,0 +1,22 @@
+.homepage{
+    background-image: url(/static/images/bg3.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    background-color: rgb(65, 200, 218);
+}
+.home{
+    width:300px;
+    margin: 20px auto;
+    padding:20px;
+    text-align: center;
+    margin-top: 100px;
+    border-radius: 3px;
+      
+}
+#buttonHome {
+    margin: 10px;
+}
+div.home, div.welcome{
+    text-align: center;
+    margin-top: -150px;
+}

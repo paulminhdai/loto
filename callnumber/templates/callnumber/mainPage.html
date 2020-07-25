@@ -1,0 +1,170 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <title>{% block title %}Welcome to LOTO!{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+        <style>
+            .mainpage{
+                background-image: url(/static/images/tet2.jpg);
+                background-size: cover;
+                background-attachment: fixed;
+                background-color: rgb(65, 200, 218);
+                opacity: .9;
+            }
+
+            #number_table{
+                border-color:black;
+            }
+
+
+            #picked_number{
+                background-image: url(/static/images/flower.png);
+                background-size: 550px;
+                background-repeat: no-repeat;
+                background-position-y: -150px;
+                background-color: #fff;
+                padding: 10px;
+                border-color: black;
+                box-shadow: 3px 2px 10px 0px rgba(0,0,0,0.75);   
+            }
+
+            #random_number{
+                text-align: center;
+                margin-bottom: 50px;
+                
+            }
+            #text{
+                color: rgb(255, 37, 37);
+                text-shadow: 5px 3px 5px #ffe555;
+            }
+            #list_number{
+                height: 500px;
+                background-color: #fff;
+                padding: 10px;
+                border-color: black;
+                box-shadow: 3px 2px 10px 0px rgba(0,0,0,0.75);
+            }
+            td{
+                padding: 0%;
+            }
+            #called_number{
+                height: 200px;
+                background-color: #ffffff;
+                padding: 10px;
+                border-color: black;
+                margin-bottom: 20px;
+                box-shadow: 3px 2px 10px 0px rgba(0,0,0,0.75);
+                
+            }
+            form{
+                text-align: center;
+                margin-top: 20px;
+            }
+            td{
+                text-align: center;
+            }
+            
+        </style>
+    </head>
+    <body class="mainpage">
+    
+        
+    <a role="button" href="{% url 'home' %}" style="color: rgb(255, 255, 255); margin: 5px;">
+        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+            <path fill-rule="evenodd" d="M8.354 11.354a.5.5 0 0 0 0-.708L5.707 8l2.647-2.646a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708 0z"/>
+            <path fill-rule="evenodd" d="M11.5 8a.5.5 0 0 0-.5-.5H6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5z"/>
+        </svg>
+    </a>
+
+    <div class="container" id="number_table">
+        <div class="row">
+            <div class="col-md-4" id="picked_number">
+                <div id="random_number">
+                    {% if num == None %}
+                        <p id="text" style="font-size: 140px; margin-bottom: 80px;margin-top: 50px;">Start</p>
+                    {% else %}
+                        <p id="text" style="font-size: 150px; margin-bottom: 80px;margin-top: 50px;">{{num}}</p>
+                    {% endif %}
+                </div>
+                
+                <form method="POST" action="#">
+                    {% csrf_token %}
+                    {% if over_msg > 88 %}
+                        <!-- Button trigger when hit the last number modal -->
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter">Last number</button>
+                    {% else %}
+                        <input type="submit" name="pick" value="Pick a number" class="btn btn-success">
+                    {% endif %}
+                    <input type="submit" name="reset" value="Reset" class="btn btn-outline-danger">
+                    <br>
+                </form>
+                
+            </div>
+            
+
+            <div class="col-md-8" id="list_number">
+                <table class="table table-bordered">
+                    
+                    <tr>
+                        {% for i in total %}
+                            {% if i in cut_line %}
+                                </tr><tr>
+                            {% endif %}
+                            {% if i in picked %}
+                                <td class="table-warning" style="color: rgb(255, 0, 0);">{{i}}</td>
+                            {% else %}
+                                <td style="color: rgb(255, 255, 255); background-color: rgb(250, 250, 250);">{{i}}</td>
+                            {% endif %}
+                            
+                        {% endfor %}
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12" id="called_number">
+                <div>
+                    {% for num in picked %}
+                    <span style="font-size: 26px;">{{num}}     |     </span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modal warning no more number to pick -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">The Game Is Over</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            Run out of number. You can start a new game.
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <form method="POST" action="#">
+            {% csrf_token %}
+            <input type="submit" name="reset" value="Start new game" class="btn btn-primary">
+        </form>
+        </div>
+        </div>
+    </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</body>
+</html>

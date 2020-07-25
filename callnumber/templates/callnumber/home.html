@@ -1,0 +1,90 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <title>Welcome to LOTO!</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{% static '/css/home.css' %}">
+        <style>
+            .homepage{
+                background-image: url(/static/images/bg3.jpg);
+                background-size: cover;
+                background-attachment: fixed;
+                background-color: rgb(65, 200, 218);
+            }
+        </style>
+    </head>
+
+    <body class="homepage">
+        <div class="welcome">
+            <img src="{% static 'images/welcome.png' %}"  width="500" height="600">
+        </div>
+        <div class="home">
+            
+            <div class="container">
+                
+                <a id="buttonHome" href="{% url 'main_page' %}" class="btn btn-success" role="button">Start</a>
+                <br>
+                <!-- Open how to plat modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">How To Play</button>
+                <br>
+                <a id="buttonHome" href="https://drive.google.com/file/d/1NbnKO4wPW0wW66sTYh6dF44cTE9oqhEj/view?usp=sharing" class="btn btn-info btn-sm" role="button">Download Tickets</a> 
+                
+            </div> 
+        </div>     
+
+        
+  
+        <!-- Modal How to play -->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">How to Play Lô Tô - Viet Bingo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <p><b>WELCOME to Lô Tô - Viet Bingo</b></p>
+                    <p>
+                        Lô Tô is a common game during Tết (Lunar New Year) in Vietnam. It is a kind of gamble but just play it for fun on Tết or any occasion.
+                    </p>
+                    <p>
+                        First of all, download the <a href="https://drive.google.com/file/d/1NbnKO4wPW0wW66sTYh6dF44cTE9oqhEj/view?usp=sharing">tickets</a> 
+                        and print out.
+                    </p>
+                    <p>
+                        There are 300 tickets in this <a href="https://drive.google.com/file/d/1NbnKO4wPW0wW66sTYh6dF44cTE9oqhEj/view?usp=sharing">file</a>.
+                        So the game can be played up to 300 people at the same time (1 ticket/person). Players need to purchage for the ticket. You can price 
+                        a ticket (eg, $1, $5). One person can purchage more than one ticket, so get more chance to win.
+                    </p> 
+                    <p>
+                        Nominate a person to pick number by clicking the "pick a number" button. The numbers will be generated ramdomlly. The nominated person could 
+                        play at the same time. Just for fun.
+                    </p>
+                    <p>
+                        When a number is generated, if the players have the number on their ticket(s), mark the number. Keep playing until anyone gets five numbers in
+                        a row, they win. It could be more than one person win the game at the same time. However, <i>you need to keep this in mind</i>, when the players get four numbers
+                        in a row, they need to say out loud <b><u>"chờ" (waiting)</u></b>. And then, when they get five numbers, they must yell <b><u>"KINH" (win)</u></b>. 
+                        If the players do not say those words, they can't win.
+                    </p>
+                    <p><b><i>Let's play!</i></b></p>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a href="{% url 'main_page' %}" class="btn btn-success" role="button">Start</a>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    </body>
+</html>
+
+
+
